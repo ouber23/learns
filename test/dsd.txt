@@ -1,0 +1,115 @@
+phonegap   安装 环境搭建 完整版
+ 
+刚刚接触 phonegap 因为配环境遇到各种各样问题.花了一下午时间才完成,所以写一个篇文章希望能给大家节约点时间.
+      本文主讲windows系统下的phonegap的环境搭建 ,以Android视角为主.ios用户可参考;
+ 
+首先介绍搭建环境的基本准备:
+1 java JDK   (搜索一下.......)
+2 android SDK 最新版(我当时的版本是 API 19  点击打开链接)
+3 Ant 打包工具  (百度一个或者 点击打开链接)
+4 eclipse   (建议使用google的  因为内置ADT     点击打开链接 )
+5 ADT (ecplise 里的插件,安卓开发工具插件     下载上面的链接,内部集成了ADT)
+6 Node.js   (点击打开链接)
+7 sublime  点击打开链接 ;是我开发js h5 css 的工具;如果大家有好的开发软件希望能告诉我一下谢谢
+ 
+下图是Node.js安装成功后
+
+ 
+将以上配置好环境变量  (配置方法略 点击 )
+特别提一下需要配环境变量的东西:  java JDK  ; android SDK;Ant ; 
+ 
+贴上我的 path 供大家参考:
+ (建议配成 ;%ANT_HOME%\bin;  去掉\bin)
+F:\工具\Ant\ant-1.8\bin;     
+C:\Develop\sdk\sdk\platform-tools;C:\Develop\sdk\sdk\tools;%Android%\.;C:\Develop\nodejs;%JAVA_HOME%\bin;C:\Develop\nodejs\
+ 
+拥有以上工具后 
+ 
+ 
+接下来开始phonegap的安装了
+ phonegap 官网 点击
+ 
+ 
+在控制台运行命令：
+
+ npm install -g phonegap                                     ( Mac使用: sudo npm install -g phonegap )
+//等待安装   完成后安装 cordova:
+ npm install -g cordova                                       ( Mac使用: sudo npm install -g cordova )
+ 
+
+ 
+
+ 
+ 
+ 
+安装完成后  
+检验语句:
+phonegap -version
+cordova -version
+ 
+ 
+
+ 
+在命令行 使用:
+[html] view plain copy 在CODE上查看代码片派生到我的代码片
+phonegap create my-app  
+cd my-app  
+phonegap run android  
+ 
+第一个 phonegap写的程序就出现了
+ 
+在my-app 目录下出现5个文件夹     打包好的工程放在platforms里面
+
+文件夹详解:
+ 
+www              : 文件夹  开发的 HTML5 ; CSS ; JS 文件都拷贝到这下面
+plugins          : 文件夹  存放的是phonegap插件  以后 文件,摄像头等插件都下载到这里,在下篇文章中介绍用法 
+merges          : 我也没用过  以后知道了再补上
+platforms      : 文件夹 存放的是编译好后的android文件   ,(如果这个文件夹为空,需要你在命令行编译一次才能生成. 如上面 phonegap run android)
+.cordova        : 存放的是配置文件 
+ 
+ 
+将此文件夹导入 eclipse 就可以使用
+phonegap 将以第三方库的形式导入
+如果src文件报错 检查是否是   phonegap的功能没有导入进来
+ 
+导入eclipse后  文本结构....下图打的camera 和 vibration 是 相机与铃声的插件  下章节介绍
+ 
+
+ 
+(图 1)
+ 
+下图是     phonegap的启动页面  调用 super.loadUrl(); 方法
+ 
+ 
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+public class baozi extends CordovaActivity   
+{  
+    @Override  
+    public void onCreate(Bundle savedInstanceState)  
+    {  
+        super.onCreate(savedInstanceState);  
+        super.init();  
+        // Set by <content src="index.html" /> in config.xml  
+//        super.loadUrl(Config.getStartUrl());  
+        super.loadUrl("file:///android_asset/www/index.html");  
+            
+          
+    }  
+}  
+ 
+
+在 super.loadUrl("  "); 中填写你的启动页面
+ 
+参数: " file:///android_asset/www/index.html " 
+指的是( 图  1)的  assets目录下 www 文件夹下的  index.html
+ 
+ 
+ 
+贴上一张 工程导入后的属性图
+
+ 
+工程下载    将phonegap的platforms导入到eclipse中  
+如果报错clear一下  查看导的lib包 有没有报错
+如果还有错  那么就是您选用了  google的API   改成最新版的android  API 就好了
+如果导入工程遇到问题 可以查阅我此篇文章
